@@ -1,0 +1,36 @@
+<!--
+ Copyright 2016 Google Inc.
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">AppAuth Codelab</string>
+    <string name="welcome_to_appauth">Welcome to AppAuth Codelab</string>
+    <string name="make_api_call">Make API Call</string>
+    <string name="make_authorization_request">Make Authorization Request</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="request_complete">API Call Successful.</string>
+    <string name="request_failed">API Call Failed.</string>
+
+    <!-- tools -->
+    <string name="tools_given_name">Some FirstName</string>
+    <string name="tools_family_name">LastName</string>
+    <string name="tools_full_name">Some FirstName LastName</string>
+    <string name="login_hint_title">Login Hint</string>
+    <string name="login_hint_description">This key will allow you to send a
+        login hint to the identity provider such as email or username</string>
+    <string name="restrictions_pending_block_user">This application is
+        waiting for further configuration details and cannot continue
+        to run. Please contact your IT admin for further details</string>
+</resources>
