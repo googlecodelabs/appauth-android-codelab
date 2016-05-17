@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
  Copyright 2016 Google Inc.
  
@@ -27,10 +28,4 @@
     <string name="tools_given_name">Some FirstName</string>
     <string name="tools_family_name">LastName</string>
     <string name="tools_full_name">Some FirstName LastName</string>
-    <string name="login_hint_title">Login Hint</string>
-    <string name="login_hint_description">This key will allow you to send a
-        login hint to the identity provider such as email or username</string>
-    <string name="restrictions_pending_block_user">This application is
-        waiting for further configuration details and cannot continue
-        to run. Please contact your IT admin for further details</string>
 </resources>
