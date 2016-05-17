@@ -108,9 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Retrieve app restrictions and take appropriate action
     getAppRestrictions();
-
-    // Register a receiver for app restrictions changed broadcast
-    registerRestrictionsReceiver();
   }
 
   @Override
@@ -122,14 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Register a receiver for app restrictions changed broadcast
     registerRestrictionsReceiver();
-  }
-
-  @Override
-  protected void onPause(){
-    super.onPause();
-
-    // Unregister receiver for app restrictions changed broadcast
-    unregisterReceiver(mRestrictionsReceiver);
   }
 
   @Override
@@ -165,6 +154,9 @@ public class MainActivity extends AppCompatActivity {
   protected void onStart() {
     super.onStart();
     checkIntent(getIntent());
+
+    // Register a receiver for app restrictions changed broadcast
+    registerRestrictionsReceiver();
   }
 
   private void enablePostAuthorizationFlows() {
