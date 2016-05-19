@@ -265,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
         Map loginHintMap = new HashMap<String, String>();
         loginHintMap.put(LOGIN_HINT,mMainActivity.getLoginHint());
         builder.setAdditionalParameters(loginHintMap);
+
+        Log.i(LOG_TAG, String.format("login_hint: %s", mMainActivity.getLoginHint()));
       }
 
       AuthorizationRequest request = builder.build();
