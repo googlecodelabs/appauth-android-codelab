@@ -15,7 +15,6 @@
 package com.google.codelabs.appauth;
 
 import android.app.PendingIntent;
-import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +23,6 @@ import android.content.RestrictionsManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.os.UserManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -47,6 +45,7 @@ import net.openid.appauth.AuthorizationRequest;
 import net.openid.appauth.AuthorizationResponse;
 import net.openid.appauth.AuthorizationService;
 import net.openid.appauth.AuthorizationServiceConfiguration;
+import net.openid.appauth.ResponseTypeValues;
 import net.openid.appauth.TokenResponse;
 
 import org.json.JSONException;
@@ -186,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     AuthorizationException error = AuthorizationException.fromIntent(intent);
     final AuthState authState = new AuthState(response, error);
     if (response != null) {
-      Log.i(LOG_TAG, String.format("Handled Authorization Response %s ", authState.toJsonString()));
+      Log.i(LOG_TAG, String.format("Handled Authorization Response %s ", authState.jsonSerializeString()));
       AuthorizationService service = new AuthorizationService(this);
       service.performTokenRequest(response.createTokenExchangeRequest(), new AuthorizationService.TokenResponseCallback() {
         @Override
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void persistAuthState(@NonNull AuthState authState) {
     getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
-        .putString(AUTH_STATE, authState.toJsonString())
+        .putString(AUTH_STATE, authState.jsonSerializeString())
         .commit();
     enablePostAuthorizationFlows();
   }
@@ -225,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         .getString(AUTH_STATE, null);
     if (!TextUtils.isEmpty(jsonString)) {
       try {
-        return AuthState.fromJson(jsonString);
+        return AuthState.jsonDeserialize(jsonString);
       } catch (JSONException jsonException) {
         // should never happen
       }
@@ -248,7 +247,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
       AuthorizationServiceConfiguration serviceConfiguration = new AuthorizationServiceConfiguration(
           Uri.parse("https://accounts.google.com/o/oauth2/v2/auth") /* auth endpoint */,
-          Uri.parse("https://www.googleapis.com/oauth2/v4/token") /* token endpoint */
+          Uri.parse("https://www.googleapis.com/oauth2/v4/token") /* token endpoint */,
+          null /*registr ndpoint*/
       );
       AuthorizationService authorizationService = new AuthorizationService(view.getContext());
       String clientId = "511828570984-fuprh0cm7665emlne3rnf9pk34kkn86s.apps.googleusercontent.com";
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
       AuthorizationRequest.Builder builder = new AuthorizationRequest.Builder(
           serviceConfiguration,
           clientId,
-          AuthorizationRequest.RESPONSE_TYPE_CODE,
+          ResponseTypeValues.CODE,
           redirectUri
       );
       builder.setScopes("profile");
@@ -271,7 +271,8 @@ public class MainActivity extends AppCompatActivity {
 
       AuthorizationRequest request = builder.build();
       String action = "com.google.codelabs.appauth.HANDLE_AUTHORIZATION_RESPONSE";
-      Intent postAuthorizationIntent = new Intent(action);
+      Intent postAuthorizationIntent = new Intent(view.getContext(), MainActivity.class);
+      postAuthorizationIntent.setAction(action);
       PendingIntent pendingIntent = PendingIntent.getActivity(view.getContext(), request.hashCode(), postAuthorizationIntent, 0);
       authorizationService.performAuthorizationRequest(request, pendingIntent);
     }
