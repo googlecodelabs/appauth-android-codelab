@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2016 Google Inc.
  
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +14,8 @@
  limitations under the License.
 -->
 
-<manifest package="com.google.codelabs.appauth"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.google.codelabs.appauth">
 
     <application
         android:name=".MainApplication"
@@ -27,26 +26,27 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.google.codelabs.appauth.HANDLE_AUTHORIZATION_RESPONSE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.google.codelabs.appauth.HANDLE_AUTHORIZATION_RESPONSE" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name="net.openid.appauth.RedirectUriReceiverActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="com.google.codelabs.appauth"/>
+                <data android:scheme="com.google.codelabs.appauth" />
             </intent-filter>
         </activity>
-        <meta-data android:name="android.content.APP_RESTRICTIONS"
+
+        <meta-data
+            android:name="android.content.APP_RESTRICTIONS"
             android:resource="@xml/app_restrictions" />
     </application>
 </manifest>
