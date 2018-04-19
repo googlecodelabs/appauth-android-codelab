@@ -14,43 +14,24 @@
 
 package com.google.codelabs.appauth;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
 import net.openid.appauth.AuthState;
-import net.openid.appauth.AuthorizationException;
-import net.openid.appauth.AuthorizationRequest;
-import net.openid.appauth.AuthorizationResponse;
 import net.openid.appauth.AuthorizationService;
-import net.openid.appauth.AuthorizationServiceConfiguration;
 import net.openid.appauth.TokenResponse;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import static com.google.codelabs.appauth.MainApplication.LOG_TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -121,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void persistAuthState(@NonNull AuthState authState) {
     getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
-        .putString(AUTH_STATE, authState.toJsonString())
+        .putString(AUTH_STATE, authState.jsonSerializeString())
         .commit();
     enablePostAuthorizationFlows();
   }
@@ -139,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         .getString(AUTH_STATE, null);
     if (!TextUtils.isEmpty(jsonString)) {
       try {
-        return AuthState.fromJson(jsonString);
+        return AuthState.jsonDeserialize(jsonString);
       } catch (JSONException jsonException) {
         // should never happen
       }
